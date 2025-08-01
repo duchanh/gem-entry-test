@@ -16,7 +16,7 @@ const UnitValueInput = () => {
    */
   const handleChangeUnit = (newUnit: UnitType) => {
     if (newUnit === "%" && numericValue > 100) {
-      setValue("100"); // Clamp về 100 nếu đang lớn hơn
+      setValue("100");
     }
     setUnit(newUnit);
   };
@@ -46,32 +46,32 @@ const UnitValueInput = () => {
     let val = e.target.value.replace(/,/g, ".");
     let cleanValue = "";
     let dotCount = 0;
-    let tempNumber = "";
 
     for (const char of val) {
       if (/[0-9]/.test(char)) {
-        // Nếu ký tự là số → nối vào tempNumber và cleanValue
-        tempNumber += char;
-
-        // Kiểm tra nếu unit là % và giá trị hiện tại vượt 100 → dừng
-        const numCheck = parseFloat(tempNumber);
-        if (unit === "%" && numCheck > 100) {
+        const testValue = cleanValue + char;
+        const numCheck = parseFloat(testValue);
+        // Nếu unit là % và phần nguyên >= 100 thì dừng
+        if (unit === "%" && Math.floor(numCheck) >= 100) {
           break;
         }
         cleanValue += char;
       } else if (char === "." && dotCount === 0) {
-        // Nếu gặp dấu . và chưa có trước đó → cho phép
+        if (unit === "%" && parseFloat(cleanValue) >= 100) {
+          break;
+        }
+        // Nếu gặp dấu . và chưa có trước đó
         cleanValue += ".";
         dotCount++;
       } else {
-        // Gặp ký tự không hợp lệ → dừng
+        // Gặp ký tự không hợp lệ thì dừng
         break;
       }
     }
 
     let num = parseFloat(cleanValue);
-    if (isNaN(num)) num = 0; // Nếu không phải số → về 0
-    if (num < 0) num = 0; // Giá trị nhỏ hơn 0 → về 0
+    if (isNaN(num)) num = 0;
+    if (num < 0) num = 0; 
 
     setValue(num.toString());
   };
