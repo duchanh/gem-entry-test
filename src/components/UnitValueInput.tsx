@@ -52,7 +52,7 @@ const UnitValueInput = () => {
         const testValue = cleanValue + char;
         const numCheck = parseFloat(testValue);
         // Nếu unit là % và phần nguyên >= 100 thì dừng
-        if (unit === "%" && Math.floor(numCheck) >= 100) {
+        if (unit === "%" && Math.floor(numCheck) > 100) {
           break;
         }
         cleanValue += char;
@@ -110,6 +110,7 @@ const UnitValueInput = () => {
         <div className="flex h-8 bg-[#212121] rounded-lg w-35">
           {/* Nút trừ */}
           <ButtonStep
+            ariaLabel="btn-minus"
             isDisabled={isDisabledMinus}
             handleChangeStepValue={() => handleChangeStepValue(-1)}
             className="rounded-l-lg"
@@ -128,6 +129,7 @@ const UnitValueInput = () => {
 
           {/* Nút cộng */}
           <ButtonStep
+            ariaLabel="btn-plus"
             isDisabled={isDisabledPlus}
             handleChangeStepValue={() => handleChangeStepValue(1)}
             className="rounded-r-lg"

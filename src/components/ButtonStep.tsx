@@ -7,6 +7,7 @@ interface IButtonStepProps {
   isDisabled: boolean;
   className: string;
   toolTipLabel: string;
+  ariaLabel: string,
   handleChangeStepValue: () => void;
   children?: React.ReactNode;
 }
@@ -15,6 +16,7 @@ const ButtonStep = ({
   children,
   className,
   toolTipLabel,
+  ariaLabel,
   handleChangeStepValue,
 }: IButtonStepProps) => {
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
@@ -27,6 +29,7 @@ const ButtonStep = ({
       onMouseLeave={() => setTooltipOpen(false)}
     >
       <button
+        aria-label={ariaLabel}
         disabled={isDisabled}
         className={clsx(
           "flex items-center justify-center w-9 min-w-9 h-full cursor-pointer hover:bg-[#3B3B3B]",

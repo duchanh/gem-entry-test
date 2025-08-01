@@ -3,7 +3,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   test: {
-    environment: 'jsdom',
-    include: ['**/*.test.tsx'],
-  }
-})
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ['./vitest-setup.ts']
+  },
+});
